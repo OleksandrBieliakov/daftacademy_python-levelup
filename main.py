@@ -76,5 +76,5 @@ def post_patient_with_id(req: Patient):
 @app.get("/patient/{patient_id}", response_model=Patient)
 def get_patient(patient_id: int):
     if not patient_id in app.patients:
-        raise HTTPException(status_code=404, detail="Patient not found")
+        raise HTTPException(status_code=204, detail="Patient not found")
     return app.patients[patient_id]
