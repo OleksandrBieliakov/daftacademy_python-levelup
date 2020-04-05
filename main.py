@@ -67,8 +67,8 @@ def method(req: Request):
 
 @app.post("/patient", response_model=PatientResp)
 def post_patient_with_id(req: Patient):
-    app.next_patient_id += 1
     patient_id = app.next_patient_id
+    app.next_patient_id += 1
     app.patients[patient_id] = req
     return PatientResp(id=patient_id, patient=req.dict())
 
