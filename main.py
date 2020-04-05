@@ -5,6 +5,17 @@ from pydantic import BaseModel
 app = FastAPI()
 # to see what funny will come
 app.counter = 0
+app.next_patient_id = 0
+
+
+class Patient(BaseModel):
+    name: str
+    surname: str
+
+
+class PatientResp(BaseModel):
+    id: int
+    patient: Patient
 
 
 class HelloResp(BaseModel):
@@ -51,3 +62,10 @@ async def read_item(name: str):
 @app.delete("/method", response_model=MethodResp)
 def method(req: Request):
     return MethodResp(method=req.method)
+
+
+@app.post("/patient", response_model=PatientResp)
+def post_patient_with_id(req: Patient):
+    patient_id = app.next_patient_id
+    app.next_patient_id += 1
+    return PatientResp(id=patient_id, patient=req)
