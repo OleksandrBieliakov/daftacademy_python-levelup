@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 from pydantic import BaseModel
 
@@ -18,6 +18,10 @@ class GiveMeSomethingRq(BaseModel):
 class GiveMeSomethingResp(BaseModel):
     received: dict
     constant_data: str = "python jest super"
+
+
+class MethodResp(BaseModel):
+    method: str
 
 
 @app.get("/", response_model=HelloResp)
@@ -41,3 +45,9 @@ async def read_item(name: str):
     return HelloResp(message=f"Hello {name}")
 
 
+@app.get("/method", response_model=MethodResp)
+@app.post("/method", response_model=MethodResp)
+@app.put("/method", response_model=MethodResp)
+@app.delete("/method", response_model=MethodResp)
+def method(req: Request):
+    return MethodResp(method=req.method)
