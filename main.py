@@ -10,7 +10,7 @@ app.next_patient_id = 0
 
 class Patient(BaseModel):
     name: str
-    surname: str
+    surename: str
 
 
 class PatientResp(BaseModel):
@@ -66,6 +66,6 @@ def method(req: Request):
 
 @app.post("/patient", response_model=PatientResp)
 def post_patient_with_id(req: Patient):
-    patient_id = app.next_patient_id
     app.next_patient_id += 1
-    return PatientResp(id=patient_id, patient=req)
+    patient_id = app.next_patient_id
+    return PatientResp(id=patient_id, patient=req.dict())
