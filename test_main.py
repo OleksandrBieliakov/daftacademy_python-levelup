@@ -47,3 +47,16 @@ def test_method():
     response = client.delete("/method")
     assert response.status_code == 200
     assert dumps(response.json()) == dumps(MethodResp(method="DELETE").__dict__)
+
+
+def test_post_patient_with_id():
+    response = client.post("/patient", json={'name': 'Name', 'surename': 'Surname'})
+    assert response.status_code == 200
+    assert response.json() == {"id": 1, "patient": {"name": "Name", "surename": "Surname"}}
+
+
+def test_get_patient():
+    patient_id = client.post("/patient", json={'name': 'Name', 'surename': 'Surname'}).json()["id"]
+    response = client.get(f"/patient/{patient_id}")
+    assert response.status_code == 200
+    assert response.json() == {"name": "Name", "surename": "Surname"}
