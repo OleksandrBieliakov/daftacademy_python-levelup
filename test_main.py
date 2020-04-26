@@ -52,7 +52,7 @@ def test_method():
 def test_post_patient_with_id():
     response = client.post("/patient", json={'name': 'Name', 'surename': 'Surname'})
     assert response.status_code == 200
-    assert response.json() == {"id": 1, "patient": {"name": "Name", "surename": "Surname"}}
+    assert response.json() == {"id": 0, "patient": {"name": "Name", "surename": "Surname"}}
 
 
 def test_get_patient():

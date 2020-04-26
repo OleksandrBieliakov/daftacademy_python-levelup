@@ -41,6 +41,11 @@ def root():
     return HelloResp(message="Hello World during the coronavirus pandemic!")
 
 
+@app.get("/welcome", response_model=HelloResp)
+def root():
+    return HelloResp(message="Hello World during the coronavirus pandemic!")
+
+
 @app.post("/giveme", response_model=GiveMeSomethingResp)
 def receive_something(rq: GiveMeSomethingRq):
     return GiveMeSomethingResp(received=rq.dict())
